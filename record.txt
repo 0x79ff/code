@@ -10,7 +10,7 @@ sg函数 : https://ac.nowcoder.com/acm/contest/57364/D
 2021 icpc shenyang
 解方程 卡常  ？
 完美匹配容斥原理+树形dp  ok
-密码锁  ok
+密码锁  ok  
 
 字符串问题M题  
 图上问题G:
