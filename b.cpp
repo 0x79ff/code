@@ -3,44 +3,73 @@ using namespace std;
 typedef long long ll;
 #define endl '\n'
 
-const int N = 2e5+10;
-ll l[N],r[N];
-ll now[N];
+const int N = 1e4+10;
+const int D = 30;
 
-struct node{
-    ll x,y;
-};
-unordered_map<node,int> vis;
-
-vector<node> a;
-
-bool cmp(node t1,node t2){
-    return t1.y < t2.y;
-}
-
+ll w[N],q[N][D],k[N][D],v[N][D],kt[D][N];
+ll b[D][D],c[N][D];
 
 int main()
 {
     // ios::sync_with_stdio(false);
     // cin.tie(0);
     // cout.tie(0);
-    int n,m;
-    for(int i=1;i<=m;i++){
-        ll l,r;cin>>l>>r;
-        a.push_back({i,l});
-        a.push_back({i,r});
+    
+    int n,d;
+    cin>>n>>d;
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=d;j++){
+            cin>>q[i][j];
+        }
     }
     
-    sort(a.begin(),a.end(),cmp);
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=d;j++){
+            cin>>k[i][j];
+            kt[j][i]=k[i][j];
+        }
+    }
+    
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=d;j++){
+            cin>>v[i][j];
+        }
+    }   
 
-    queue<ll> c;
+    for(int i=1;i<=n;i++){
+        cin>>w[i];
+    }
 
-    for(int i=0;i<a.size();i++){
-        if(now[a[i].x]==0){
-            c.push_back();
+
+    for(int i=1;i<=d;i++){
+        for(int j=1;j<=d;j++){
+            for(int x=1;x<=n;x++){
+                b[i][j]+=kt[i][x]*v[x][j];
+            }
         }
     }
 
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=d;j++){
+            for(int x=1;x<=d;x++){
+                c[i][j]+=q[i][x]*b[x][j];
+            }
+        }
+    }
+    
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=d;j++){
+            c[i][j]*=w[i];
+        }
+    }
+
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=d;j++){
+            cout<<c[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    
 
     return 0;
 }
