@@ -49,9 +49,12 @@ int main()
             }
             else{
                 newc.insert(s);
-                if(b[s[2]][0] <= s[0] && b[s[2]][1]>=day && vis[s[2]]){
+                if(b[s[2]][0] <= s[0] && b[s[2]][1]>=day && b[s[2]][1]!=0){
                     ans.insert(s[1]);
                 }
+            //     if(b[s[2]][0] <= s[0] && b[s[2]][1]>=day && vis[s[2]]){
+            //         ans.insert(s[1]);
+            //     }
             }
         }
         c=newc;
