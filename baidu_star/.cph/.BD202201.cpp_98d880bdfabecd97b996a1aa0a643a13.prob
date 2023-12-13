@@ -1,1 +1,0 @@
-{"name":"Local: BD202201","url":"e:\\ACM2\\baidu_star\\BD202201.cpp","tests":[{"id":1702467881418,"input":"1\n5\n0 1 2 3 3\n1 0 1 2 2\n2 1 0 3 3\n3 2 3 0 4\n3 2 3 4 0","output":"4\n1 2\n2 3\n2 4\n2 5"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\ACM2\\baidu_star\\BD202201.cpp","group":"local","local":true}
