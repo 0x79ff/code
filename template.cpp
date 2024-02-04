@@ -6,7 +6,6 @@ typedef long long ll;
 
 
 
-
 void solve()
 {
 
@@ -15,7 +14,7 @@ void solve()
 int main()
 {
     IOS;
-    int T;cin>>T;
+    int T=1;cin>>T;
     while(T--){
         solve();
     }
