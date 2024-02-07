@@ -9,9 +9,15 @@ typedef long long ll;
 
 void solve()
 {
-
+    ll n;
+    cin>>n;
+    if(n%6==0){
+        cout<<n/6<<endl;
+    }
+    else{
+        cout<<2*(n/6)<<endl;
+    }
 }
-
 
 int main()
 {

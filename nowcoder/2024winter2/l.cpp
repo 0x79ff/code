@@ -6,12 +6,11 @@ typedef long long ll;
 
 
 
-
 void solve()
 {
-
+    ll c,d,h,w;
+    cin>>c>>d>>h>>w;cout<<3*w*c<<endl;
 }
-
 
 int main()
 {
