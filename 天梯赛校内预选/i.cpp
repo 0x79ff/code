@@ -8,7 +8,7 @@ const ll N = 550;
 const ll inf = 1e9+7;
 
 char a[N][N];
-bool vis[N][N][2];//0 1的分别表示两种方式是否被访问过
+bool vis[N][N];
 const int dx[4] = {1,-1,0,0};
 const int dy[4] = {0,0,1,-1};
 int n,m;
@@ -21,7 +21,6 @@ bool inr(int x,int y)
 
 void solve()
 {
-
     cin>>n>>m;
     for(int i=1;i<=n;i++){
         string s;cin>>s;
@@ -34,13 +33,16 @@ void solve()
     deque<array<int,3>> q;
 
     q.push_front({0,1,1});
-    vis[1][1][0]=vis[1][1][1]=1;
     
     while(!q.empty()){
         array<int,3> s;
         s=q.front();
-        //cout<<s[1]<<" "<<s[2]<<" "<<s[0]<<endl;
         q.pop_front();
+        if(vis[s[1]][s[2]]) continue;
+
+        vis[s[1]][s[2]]=1;
+        //cout<<s[1]<<" "<<s[2]<<" "<<s[0]<<endl;
+
         if(s[1]==n & s[2]==m){
             cout<<s[0]<<endl;
             return;
@@ -48,9 +50,8 @@ void solve()
 
         for(int i=0;i<4;i++){
             int xx=s[1]+dx[i],yy=s[2]+dy[i];
-            if(inr(xx,yy)&&!vis[xx][yy][0]){
+            if(inr(xx,yy)&&!vis[xx][yy]){
                 if(a[xx][yy]=='.'){
-                    vis[xx][yy][0]=1;
                     q.push_front({s[0],xx,yy});
                 }
             }    
@@ -61,8 +62,7 @@ void solve()
                 if(i==0 && j==0) continue;
                 if(abs(i)==2 && abs(j)==2) continue;
                 int xx = s[1]+i,yy = s[2]+j;
-                if(inr(xx,yy) && !vis[xx][yy][1]){
-                    vis[xx][yy][1]=1;
+                if(inr(xx,yy) && !vis[xx][yy]){
                     q.push_back({s[0]+1,xx,yy});
                 }
             }
