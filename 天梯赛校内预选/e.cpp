@@ -13,13 +13,13 @@ void solve()
     string s;
     cin>>n>>s;
     s=" "+s;
-    ll ans = n+1;
+    ll ans = n;
     for(int i=1;i<n*2;i++){
-        if(s[i]=='(' && s[i+1]==')'){
+        if(s[i]==')' && s[i+1]=='('){
             ans--;
         }
     }
-    cout<<ans<<endl;  //  ?
+    cout<<ans<<endl;  
 }
 
 int main()

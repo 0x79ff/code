@@ -8,12 +8,9 @@ const ll N = 550;
 const ll inf = 1e9+7;
 
 char a[N][N];
-bool vis[N][N];
-int dp[N][N];
+bool vis[N][N][2];//0 1的分别表示两种方式是否被访问过
 const int dx[4] = {1,-1,0,0};
 const int dy[4] = {0,0,1,-1};
-const int ddx[16] = {-2,-2,-2,-1,-1,-1,-1,0,0,1,1,1,1,2,2,2};
-const int ddy[16] = {-1,0,1,-2,-1,1,2,-2,2,-2,-1,1,2,-1,0,1};
 int n,m;
 
 bool inr(int x,int y)
@@ -21,38 +18,6 @@ bool inr(int x,int y)
     return x>=1 && x<=n && y>=1 && y<=m;
 }
 
-vector<array<ll,3>> v;
-
-void dfs(int z,int x,int y)
-{
-    for(int i=0;i<4;i++){
-        int xx=x+dx[i],yy=y+dy[i];
-        if(inr(xx,yy)&&a[xx][yy]=='.'){
-            dp[xx][yy] = min(dp[xx][yy],z);
-            if(vis[xx][yy]==0){
-                vis[xx][yy]=1;
-                v.push_back({z,xx,yy});
-                dfs(z,xx,yy);    
-            }
-            
-        }
-    }  
-}
-
-void se(int z,int x,int y)
-{
-    for(int i=0;i<16;i++){
-        int xx=x+ddx[i],yy=y+ddy[i];
-        if(inr(xx,yy)){
-            dp[xx][yy] = min(dp[xx][yy],z+1);
-            if(vis[xx][yy]==0){
-                vis[xx][yy]=1;
-                v.push_back({z+1,xx,yy});     
-            }
-           
-        }
-    }
-}
 
 void solve()
 {
@@ -62,40 +27,48 @@ void solve()
         string s;cin>>s;
         for(int j=1;j<=m;j++){
             a[i][j] = s[j-1];
-            dp[i][j] = inf;
         }
     }
 
-    //bfs
-    priority_queue<array<ll,3>,vector<array<ll,3>>,greater<array<ll,3>>> q;
-    q.push({0,1,1});
-    vis[1][1]=1;
-    dp[1][1]=0;
+    //01 bfs
+    deque<array<int,3>> q;
+
+    q.push_front({0,1,1});
+    vis[1][1][0]=vis[1][1][1]=1;
     
     while(!q.empty()){
-        array<ll,3> s = q.top();
-        q.pop();
-        s[0]=dp[s[1]][s[2]];
-        //cout<<"pop:"<<s[0]<<" "<<s[1]<<" "<<s[2]<<endl;
-        
-        //找这个点所有联通的点
-        v.clear();
-        dfs(s[0],s[1],s[2]);
-        for(auto s:v){
-            //cout<<s[0]<<" "<<s[1]<<" "<<s[2]<<endl;
-            q.push(s);
+        array<int,3> s;
+        s=q.front();
+        //cout<<s[1]<<" "<<s[2]<<" "<<s[0]<<endl;
+        q.pop_front();
+        if(s[1]==n & s[2]==m){
+            cout<<s[0]<<endl;
+            return;
         }
-        
-        //找使用一次技能可以到的
-        v.clear();
-        se(s[0],s[1],s[2]);
-        for(auto s:v){
-          //  cout<<s[0]<<" "<<s[1]<<" "<<s[2]<<endl;
-            q.push(s);
+
+        for(int i=0;i<4;i++){
+            int xx=s[1]+dx[i],yy=s[2]+dy[i];
+            if(inr(xx,yy)&&!vis[xx][yy][0]){
+                if(a[xx][yy]=='.'){
+                    vis[xx][yy][0]=1;
+                    q.push_front({s[0],xx,yy});
+                }
+            }    
+        }
+
+        for(int i=-2;i<=2;i++){
+            for(int j=-2;j<=2;j++){
+                if(i==0 && j==0) continue;
+                if(abs(i)==2 && abs(j)==2) continue;
+                int xx = s[1]+i,yy = s[2]+j;
+                if(inr(xx,yy) && !vis[xx][yy][1]){
+                    vis[xx][yy][1]=1;
+                    q.push_back({s[0]+1,xx,yy});
+                }
+            }
         }
         
     }
-    cout<<dp[n][m]<<endl;
 }
 
 int main()
